@@ -16,7 +16,7 @@ public class Character : MonoBehaviour
 
     float speed;
 
-    public static Vector2 sensitivity = new Vector2(2000f, 2000f);
+    public float sensitivity;
 
     private float rotationX;
 
@@ -30,8 +30,8 @@ public class Character : MonoBehaviour
     {
         isJumping = false;
         rb = GetComponent<Rigidbody>();
-        position = transform.position;
         speed = speedWalking;
+
     }
 
     // Update is called once per frame
@@ -150,7 +150,7 @@ public class Character : MonoBehaviour
     //Set la rotation X en fonction de la souris
     public void SetCamera()
     {
-        float wantedVelocity = GetMouseInput() * sensitivity.x;
+        float wantedVelocity = GetMouseInput() * sensitivity;
         rotationX += wantedVelocity * Time.deltaTime;
     }
 
@@ -160,5 +160,11 @@ public class Character : MonoBehaviour
         float input = Input.GetAxis("Mouse X");
 
         return input;
+    }
+
+    public void SetPosition(Vector3 position)
+    {
+        this.position = position;
+        rb.position = position;
     }
 }
