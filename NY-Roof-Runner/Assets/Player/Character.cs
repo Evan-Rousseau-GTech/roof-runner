@@ -80,7 +80,7 @@ public class Character : MonoBehaviour
         }
         else
         {
-            position.z += 
+            position.z += 1;
         }
 
     }
