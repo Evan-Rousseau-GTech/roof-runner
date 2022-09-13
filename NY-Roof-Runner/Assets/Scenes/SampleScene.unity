@@ -330,9 +330,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7c93a4ad96a0934e9199f83517ff33b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floorObject: {fileID: 6066499183063890989, guid: 38b3f4b422f7c9246ab2c7e33f41d037, type: 3}
+  floorObject: {fileID: 5741504545922484705, guid: 38b3f4b422f7c9246ab2c7e33f41d037, type: 3}
   blockObject: {fileID: 8148377589886291593, guid: 7e3693d48b363d74b8aa0b0de7004208, type: 3}
-  roofObject: {fileID: 7845259370264613006, guid: 5f2e6d6c6e836b94ebe3ad09e2d65223, type: 3}
+  roofObject: {fileID: 7796736102402888742, guid: 88254d7d47b8f7d4db37963fccbd6911, type: 3}
 --- !u!4 &1135027025
 Transform:
   m_ObjectHideFlags: 0
