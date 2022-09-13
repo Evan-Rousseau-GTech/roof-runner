@@ -12,7 +12,7 @@ public class Character : MonoBehaviour
 
     float jumpSpeed = 5f;
 
-    bool isJumping;
+    bool isJumping; 
 
     float speed;
 
@@ -23,7 +23,6 @@ public class Character : MonoBehaviour
     Vector3 lastDirectionForward;
     Vector3 lastDirectionRight;
 
-    float lastAngle;
     Rigidbody rb;
 
     // Start is called before the first frame update
@@ -45,12 +44,14 @@ public class Character : MonoBehaviour
         transform.SetPositionAndRotation(position, Quaternion.Euler(0, rotationX, 0));
     }
 
+
+    //Vérifie les entrées du clavier puis fait avancer le personnage en fonction.
     public void CheckInput()
     {
-        
 
-        if (!isJumping)
+        if (!isJumping) 
         {
+            //Verifie si le personnage court
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 speed = speedRunning;
@@ -62,17 +63,13 @@ public class Character : MonoBehaviour
 
             if (Input.GetKey(KeyCode.Z))
             {
-                /*position.x += transform.forward.x * speed * Time.deltaTime;
-                position.z += transform.forward.z * speed * Time.deltaTime;*/
                 position += transform.forward * speed * Time.deltaTime;
                 lastDirectionForward = transform.forward;
-                lastAngle = transform.rotation.y;
             }
             if (Input.GetKey(KeyCode.S))
             {
                 position -= transform.forward * speed * Time.deltaTime;
                 lastDirectionForward = -transform.forward;
-                lastAngle = transform.rotation.y;
             }
             if (Input.GetKey(KeyCode.Q))
             {
@@ -87,20 +84,21 @@ public class Character : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                rb.velocity = Vector3.up * jumpSpeed;
+                rb.velocity = Vector3.up * jumpSpeed; //Permet le saut
                 isJumping = true;
             }
             CheckKeyUp();
         }
         else
         {
+            //Inertie du joueur
             position += lastDirectionForward * speed * Time.deltaTime;
             position += lastDirectionRight * speed * Time.deltaTime;
         }
 
     }
 
-
+    //Vérifie si une des entrées est relaché puis réinitialise la direction actuelle
     void CheckKeyUp()
     {
         if (Input.GetKeyUp(KeyCode.Z))
@@ -121,7 +119,6 @@ public class Character : MonoBehaviour
         }
     }
 
-
     Vector3 lastDirectionRightnull()
     {
         return lastDirectionRight = Vector3.zero;
@@ -134,36 +131,23 @@ public class Character : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("col");
-        //Check for a match with the specific tag on any GameObject that collides with your GameObject
         if (collision.gameObject.tag == "Floor")
         {
-            //If the GameObject has the same tag as specified, output this message in the console
             isJumping = false;
             lastDirectionForward = Vector3.zero;
             lastDirectionRight = Vector3.zero;
         }
     }
 
-    /*private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.tag == "Floor")
-        {
-            //If the GameObject has the same tag as specified, output this message in the console
-            isJumping = true;
-        }
-    }*/
-
-
-
+    //Set la rotation X en fonction de la souris
     public void SetCamera()
     {
-        float wantedVelocity = GetInput() * sensitivity.x;
+        float wantedVelocity = GetMouseInput() * sensitivity.x;
         rotationX += wantedVelocity * Time.deltaTime;
-        //rotation.y = Mathf.Clamp(rotation.y, -80, 80);
     }
 
-    private float GetInput()
+    //Retourne l'entrée X de la souris
+    private float GetMouseInput()
     {
         float input = Input.GetAxis("Mouse X");
 

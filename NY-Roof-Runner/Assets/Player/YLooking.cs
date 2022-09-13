@@ -19,14 +19,16 @@ public class YLooking : MonoBehaviour
         transform.localEulerAngles = new Vector3(rotationY, 0, 0);
     }
 
+    //Set la rotation Y en fonction de la souris
     public void SetCamera()
     {
-        float wantedVelocity = GetInput() * sensitivity.y;
+        float wantedVelocity = GetMouseInput() * sensitivity.y;
         rotationY += wantedVelocity * Time.deltaTime;
         rotationY = Mathf.Clamp(rotationY, -80, 80);
     }
 
-    private float GetInput()
+    //Retourne l'entrée Y de la souris
+    private float GetMouseInput()
     {
         float input = -Input.GetAxis("Mouse Y");
         return input;
