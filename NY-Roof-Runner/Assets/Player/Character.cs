@@ -14,10 +14,16 @@ public class Character : MonoBehaviour
 
     bool isJumping;
 
+    float speed;
+
     public static Vector2 sensitivity = new Vector2(2000f, 2000f);
 
     private float rotationX;
 
+    Vector3 lastDirectionForward;
+    Vector3 lastDirectionRight;
+
+    float lastAngle;
     Rigidbody rb;
 
     // Start is called before the first frame update
@@ -26,6 +32,7 @@ public class Character : MonoBehaviour
         isJumping = false;
         rb = GetComponent<Rigidbody>();
         position = transform.position;
+        speed = speedWalking;
     }
 
     // Update is called once per frame
@@ -33,65 +40,108 @@ public class Character : MonoBehaviour
     {
         SetCamera();
         CheckInput();
+        
         position.y = rb.position.y;
         transform.SetPositionAndRotation(position, Quaternion.Euler(0, rotationX, 0));
     }
 
     public void CheckInput()
     {
-        float speed;
-
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-             speed = speedRunning;
-        }
-        else
-        {
-            speed = speedWalking;
-        }
+        
 
         if (!isJumping)
         {
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                speed = speedRunning;
+            }
+            else
+            {
+                speed = speedWalking;
+            }
+
             if (Input.GetKey(KeyCode.Z))
             {
-                position.x += transform.forward.x * speed * Time.deltaTime;
-                position.z += transform.forward.z * speed * Time.deltaTime;
+                /*position.x += transform.forward.x * speed * Time.deltaTime;
+                position.z += transform.forward.z * speed * Time.deltaTime;*/
+                position += transform.forward * speed * Time.deltaTime;
+                lastDirectionForward = transform.forward;
+                lastAngle = transform.rotation.y;
             }
             if (Input.GetKey(KeyCode.S))
             {
-                position.x -= transform.forward.x * speed * Time.deltaTime;
-                position.z -= transform.forward.z * speed * Time.deltaTime;
+                position -= transform.forward * speed * Time.deltaTime;
+                lastDirectionForward = -transform.forward;
+                lastAngle = transform.rotation.y;
             }
             if (Input.GetKey(KeyCode.Q))
             {
-                position.x -= transform.right.x * speed * Time.deltaTime;
-                position.z -= transform.right.z * speed * Time.deltaTime;
+                position -= transform.right * speed * Time.deltaTime;
+                lastDirectionRight = -transform.right;
             }
             if (Input.GetKey(KeyCode.D))
             {
-                position.x += transform.right.x * speed * Time.deltaTime;
-                position.z += transform.right.z * speed * Time.deltaTime;
+                position += transform.right * speed * Time.deltaTime;
+                lastDirectionRight = transform.right;
+
             }
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 rb.velocity = Vector3.up * jumpSpeed;
                 isJumping = true;
             }
+            CheckKeyUp();
         }
         else
         {
-            position.z += 1;
+            position += lastDirectionForward * speed * Time.deltaTime;
+            position += lastDirectionRight * speed * Time.deltaTime;
         }
 
     }
 
+
+    void CheckKeyUp()
+    {
+        if (Input.GetKeyUp(KeyCode.Z))
+        {
+            lastDirectionForwardnull();
+        }
+        if (Input.GetKeyUp(KeyCode.S))
+        {
+            lastDirectionForwardnull();
+        }
+        if (Input.GetKeyUp(KeyCode.Q))
+        {
+            lastDirectionRightnull();
+        }
+        if (Input.GetKeyUp(KeyCode.D))
+        {
+            lastDirectionRightnull();
+        }
+    }
+
+
+    Vector3 lastDirectionRightnull()
+    {
+        return lastDirectionRight = Vector3.zero;
+    }
+
+    Vector3 lastDirectionForwardnull()
+    {
+        return lastDirectionRight = Vector3.zero;
+    }
+
     void OnCollisionEnter(Collision collision)
     {
+        Debug.Log("col");
         //Check for a match with the specific tag on any GameObject that collides with your GameObject
         if (collision.gameObject.tag == "Floor")
         {
             //If the GameObject has the same tag as specified, output this message in the console
             isJumping = false;
+            lastDirectionForward = Vector3.zero;
+            lastDirectionRight = Vector3.zero;
         }
     }
 
