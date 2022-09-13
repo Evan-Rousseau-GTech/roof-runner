@@ -9,7 +9,7 @@ public class WorldGeneration : MonoBehaviour
     public GameObject roofObject;
     public GameObject fanObject;
     public GameObject map;
-
+    public Character character;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,7 +32,8 @@ public class WorldGeneration : MonoBehaviour
                 roof.transform.parent = building.transform;
                 if (i == 0 && j == 0)
                 {
-                    // Set player height
+                    //À mettre dans le game manager
+                    character.SetPosition(new Vector3(batiment.transform.position.x, batiment.transform.position.y + batiment.transform.localScale.y, batiment.transform.position.z));
                 } else
                 {
                     // Set roof obstacles

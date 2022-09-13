@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class YLooking : MonoBehaviour
 {
-    Vector2 sensitivity;
+    public float sensitivity;
     private float rotationY;
     // Start is called before the first frame update
     void Start()
     {
-        sensitivity = Character.sensitivity;
     }
 
     // Update is called once per frame
@@ -22,7 +21,7 @@ public class YLooking : MonoBehaviour
     //Set la rotation Y en fonction de la souris
     public void SetCamera()
     {
-        float wantedVelocity = GetMouseInput() * sensitivity.y;
+        float wantedVelocity = GetMouseInput() * sensitivity;
         rotationY += wantedVelocity * Time.deltaTime;
         rotationY = Mathf.Clamp(rotationY, -80, 80);
     }
