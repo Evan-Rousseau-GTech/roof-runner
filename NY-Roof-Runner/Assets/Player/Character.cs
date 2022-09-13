@@ -105,6 +105,7 @@ public class Character : MonoBehaviour
         {
             lastDirectionForwardnull();
         }
+
         if (Input.GetKeyUp(KeyCode.S))
         {
             lastDirectionForwardnull();
@@ -122,6 +123,8 @@ public class Character : MonoBehaviour
     Vector3 lastDirectionRightnull()
     {
         return lastDirectionRight = Vector3.zero;
+
+
     }
 
     Vector3 lastDirectionForwardnull()
@@ -136,6 +139,11 @@ public class Character : MonoBehaviour
             isJumping = false;
             lastDirectionForward = Vector3.zero;
             lastDirectionRight = Vector3.zero;
+        }
+
+        if (collision.gameObject.tag == "Checkpoint")
+        {
+            collision.gameObject.GetComponent<CheckPoint>().isWaitingColision = false;
         }
     }
 
