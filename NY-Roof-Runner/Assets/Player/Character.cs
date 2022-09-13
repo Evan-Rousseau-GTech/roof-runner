@@ -31,7 +31,6 @@ public class Character : MonoBehaviour
         isJumping = false;
         rb = GetComponent<Rigidbody>();
         speed = speedWalking;
-
     }
 
     // Update is called once per frame
@@ -123,8 +122,6 @@ public class Character : MonoBehaviour
     Vector3 lastDirectionRightnull()
     {
         return lastDirectionRight = Vector3.zero;
-
-
     }
 
     Vector3 lastDirectionForwardnull()
@@ -139,6 +136,11 @@ public class Character : MonoBehaviour
             isJumping = false;
             lastDirectionForward = Vector3.zero;
             lastDirectionRight = Vector3.zero;
+        }
+
+        if (collision.gameObject.tag == "Wall")
+        {
+
         }
 
         if (collision.gameObject.tag == "Checkpoint")

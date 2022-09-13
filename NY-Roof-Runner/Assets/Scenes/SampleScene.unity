@@ -348,6 +348,7 @@ MonoBehaviour:
   blockObject: {fileID: 8148377589886291593, guid: 7e3693d48b363d74b8aa0b0de7004208, type: 3}
   roofObject: {fileID: 7796736102402888742, guid: 88254d7d47b8f7d4db37963fccbd6911, type: 3}
   fanObject: {fileID: 3834194397610124001, guid: a4275dd230303b44db233ac973f697e7, type: 3}
+  map: {fileID: 0}
   character: {fileID: 1492748411}
 --- !u!4 &1135027025
 Transform:
@@ -376,8 +377,8 @@ GameObject:
   - component: {fileID: 1492748414}
   - component: {fileID: 1492748413}
   - component: {fileID: 1492748412}
-  - component: {fileID: 1492748416}
   - component: {fileID: 1492748411}
+  - component: {fileID: 1492748416}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -471,7 +472,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1492748410}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.729, z: 0}
+  m_LocalPosition: {x: 54.26, y: 200, z: 103.8}
   m_LocalScale: {x: 1, y: 1.54, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
