@@ -27,6 +27,7 @@ public class WorldGeneration : MonoBehaviour
                 int rand = Random.Range(20, 35);
                 GameObject batiment = Instantiate(blockObject, new Vector3((i - 5) * 15f + 7.5f, rand / 2f, (j - 5) * 15f + 7.5f), Quaternion.identity);
                 batiment.transform.localScale = new Vector3(batiment.transform.localScale.x, rand, batiment.transform.localScale.z);
+                batiment.GetComponent<BoxCollider>().size = new Vector3(batiment.transform.localScale.x, rand, batiment.transform.localScale.z);
                 batiment.transform.parent = building.transform;
                 GameObject roof = Instantiate(roofObject, new Vector3((i - 5) * 15f + 7.5f, rand+0.5f, (j - 5) * 15f + 7.5f), Quaternion.identity);
                 roof.transform.parent = building.transform;

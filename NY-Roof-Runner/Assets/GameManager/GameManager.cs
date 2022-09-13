@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
             checkPoint.idCheckpoint = IDcheckPoint;
             IDcheckPoint = IDcheckPoint + 1;
         }
+        
         //createCheckpoint();
     }
 
@@ -41,6 +42,7 @@ public class GameManager : MonoBehaviour
         GameCheckpointList.Add(NewCheckpoint);
     }
     */
+
     IEnumerator CheckEndGame()
     {
         bool over = true;
