@@ -9,6 +9,7 @@ public class CheckPoint : MonoBehaviour
     [SerializeField] GameObject PrefabCheckpoint;
     [SerializeField] Material newMatrial;
     [SerializeField] MeshRenderer ThisMEsh;
+    [SerializeField] ParticleSystem ThisParticules;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +28,7 @@ public class CheckPoint : MonoBehaviour
         if(isWaitingColision == false)
         {
             ThisMEsh.material = newMatrial;
+            ThisParticules.enableEmission = false;
         }
 
     }
