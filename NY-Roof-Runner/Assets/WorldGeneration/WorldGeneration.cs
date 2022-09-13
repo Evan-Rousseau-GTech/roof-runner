@@ -8,22 +8,28 @@ public class WorldGeneration : MonoBehaviour
     public GameObject blockObject;
     public GameObject roofObject;
     public GameObject fanObject;
+    public GameObject map;
 
     // Start is called before the first frame update
     void Start()
     {
+        map = new GameObject("Map");
         // Generate floor
-        Instantiate(floorObject, new Vector3(0, 0, 0), Quaternion.identity);
+        GameObject floor = Instantiate(floorObject, new Vector3(0, 0, 0), Quaternion.identity);
+        floor.transform.parent = map.transform;
         
         for(int i = 0; i < 10; i++)
         {
             for(int j = 0; j < 10; j++)
             {
                 // Generate random height building
+                GameObject building = new GameObject("Building");
                 int rand = Random.Range(20, 35);
                 GameObject batiment = Instantiate(blockObject, new Vector3((i - 5) * 15f + 7.5f, rand / 2f, (j - 5) * 15f + 7.5f), Quaternion.identity);
                 batiment.transform.localScale = new Vector3(batiment.transform.localScale.x, rand, batiment.transform.localScale.z);
-                Instantiate(roofObject, new Vector3((i - 5) * 15f + 7.5f, rand+0.5f, (j - 5) * 15f + 7.5f), Quaternion.identity);
+                batiment.transform.parent = building.transform;
+                GameObject roof = Instantiate(roofObject, new Vector3((i - 5) * 15f + 7.5f, rand+0.5f, (j - 5) * 15f + 7.5f), Quaternion.identity);
+                roof.transform.parent = building.transform;
                 if (i == 0 && j == 0)
                 {
                     // Set player height
@@ -44,7 +50,9 @@ public class WorldGeneration : MonoBehaviour
                     Vector3 obstPos = obstaclePositions[Random.Range(0, 3)];
                     int obstRot = 90*Random.Range(0, 3);
                     obstacle.transform.SetPositionAndRotation(obstPos, Quaternion.Euler(new Vector3(0,obstRot,0)));
+                    obstacle.transform.parent = building.transform;
                 }
+                building.transform.parent = map.transform;
             }
         }
     }
