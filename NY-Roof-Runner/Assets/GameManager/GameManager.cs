@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] int GameState = 0; //0 = pas commencer, 1 = vient de commencer,2 = partie fini,3 = fermer le jeu
     [SerializeField] int IDcheckPoint = 1;
     [SerializeField] List<CheckPoint> GameCheckpointList = new List<CheckPoint>();
-    Character Player;
+    [SerializeField] Character Player;
 
     // Start is called before the first frame update
     void Start()
