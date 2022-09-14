@@ -41,6 +41,12 @@ public class GameManager : MonoBehaviour
             else if(countdown == 0)
             {
                 centerText.text = "GO";
+                float time = Time.realtimeSinceStartup - 5;
+                string minutes = ((int)time / 60).ToString();
+                string secondes = ((int)(time % 60)).ToString();
+                if (secondes.Length == 1) secondes = "0" + secondes;
+                string centisecondes = ((int)((time % 1) * 100)).ToString();
+                timer.text = minutes + ":" + secondes + ":" + centisecondes;
             }
             else
             {
@@ -50,11 +56,11 @@ public class GameManager : MonoBehaviour
         }
         if(GameState == 1)
         {
-            float time = Time.realtimeSinceStartup - 4;
+            float time = Time.realtimeSinceStartup - 5;
             string minutes = ((int)time / 60).ToString();
-            string secondes = ((int)time).ToString();
+            string secondes = ((int)(time % 60)).ToString();
             if (secondes.Length == 1) secondes = "0" + secondes;
-            string centisecondes = ((int)((time - (int)time) * 100)).ToString();
+            string centisecondes = ((int)((time % 1) * 100)).ToString();
             timer.text = minutes + ":" + secondes + ":" + centisecondes;
         }
         // Player.transform.position = new Vector3(Player.transform.position.x, Player.transform.position.y, Player.transform.position.z - 0.001f);
