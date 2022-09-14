@@ -204,7 +204,7 @@ public class Character : MonoBehaviour
 
     public void SetPosition(Vector3 position)
     {
-        this.position = position;
+        rb.position = position;
     }
 
     public void SetCheckpoint(Vector3 position)
