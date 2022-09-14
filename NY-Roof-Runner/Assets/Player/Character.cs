@@ -6,9 +6,9 @@ using Image = UnityEngine.UI.Image;
 
 public class Character : MonoBehaviour
 {
-    public Vector3 positionForward;
-    public Vector3 positionRight;
-    public Vector3 position;
+    Vector3 positionForward;
+    Vector3 positionRight;
+    Vector3 position;
 
     float speedWalking = 7.5f;
 
@@ -37,7 +37,6 @@ public class Character : MonoBehaviour
         isJumping = false;
         rb = GetComponent<Rigidbody>();
         rb.position = this.position;
-        //rb.position = this.position;
         speed = speedWalking;
         fadePanel = GameObject.Find("Fade");
     }
@@ -53,6 +52,16 @@ public class Character : MonoBehaviour
         float old = rb.velocity.y;
         rb.velocity = positionForward + positionRight;
         rb.velocity = new Vector3(rb.velocity.x, old, rb.velocity.z);
+
+        if (rb.position.y - 1.6f < 15f)
+        {
+            float fadePercent = 1 - ((rb.position.y - 1.6f) / 15f);
+            fadePanel.GetComponent<Image>().color = new Vector4(255, 255, 255, fadePercent);
+        }
+        if (rb.position.y - 1.6f < 0f)
+        {
+            ResetPosition();
+        }
         
     }
 
@@ -101,7 +110,6 @@ public class Character : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                Debug.Log("jumpOui");
                 rb.velocity = Vector3.up * jumpSpeed; //Permet le saut
                 isJumping = true;
             }
@@ -167,7 +175,10 @@ public class Character : MonoBehaviour
 
         if (collision.gameObject.tag == "Wall")
         {
-
+            lastDirectionForward = Vector3.zero;
+            lastDirectionRight = Vector3.zero;
+            positionForward = Vector3.zero;
+            positionRight = Vector3.zero;
         }
 
         if (collision.gameObject.tag == "Checkpoint")
