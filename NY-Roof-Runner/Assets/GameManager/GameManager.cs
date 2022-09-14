@@ -1,16 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour 
 {
-    [SerializeField] float PlayerScore = 0;
-    [SerializeField] int PlayerHp = 5;
-    [SerializeField] float Gametimer = 0;
     [SerializeField] int GameState = 0; //0 = pas commencer, 1 = vient de commencer,2 = partie fini,3 = fermer le jeu
     [SerializeField] int IDcheckPoint = 1;
     [SerializeField] List<CheckPoint> GameCheckpointList = new List<CheckPoint>();
     [SerializeField] Character Player;
+
+    [SerializeField] TMP_Text centerText;
+    [SerializeField] TMP_Text timer;
 
     // Start is called before the first frame update
     void Start()
@@ -20,7 +21,6 @@ public class GameManager : MonoBehaviour
             checkPoint.idCheckpoint = IDcheckPoint;
             IDcheckPoint = IDcheckPoint + 1;
         }
-        
         //createCheckpoint();
     }
 
@@ -31,7 +31,33 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       // Player.transform.position = new Vector3(Player.transform.position.x, Player.transform.position.y, Player.transform.position.z - 0.001f);
+        if(GameState == 0)
+        {
+            int countdown = 5 - (int)Time.realtimeSinceStartup;
+            if(countdown > 0)
+            {
+                centerText.text = countdown.ToString();
+            }
+            else if(countdown == 0)
+            {
+                centerText.text = "GO";
+            }
+            else
+            {
+                centerText.text = null;
+                GameState = 1;
+            }
+        }
+        if(GameState == 1)
+        {
+            float time = Time.realtimeSinceStartup - 4;
+            string minutes = ((int)time / 60).ToString();
+            string secondes = ((int)time).ToString();
+            if (secondes.Length == 1) secondes = "0" + secondes;
+            string centisecondes = ((int)((time - (int)time) * 100)).ToString();
+            timer.text = minutes + ":" + secondes + ":" + centisecondes;
+        }
+        // Player.transform.position = new Vector3(Player.transform.position.x, Player.transform.position.y, Player.transform.position.z - 0.001f);
     }
     /*
     void createCheckpoint()
@@ -45,20 +71,20 @@ public class GameManager : MonoBehaviour
 
     IEnumerator CheckEndGame()
     {
-        bool over = true;
+        /*bool over = true;
         foreach (CheckPoint checkPoint in GameCheckpointList)
         {
-            Debug.Log("fin2"+ checkPoint.isWaitingColision+ " id"+ checkPoint.idCheckpoint);
+            Debug.Log("fin2" + checkPoint.isWaitingColision + " id" + checkPoint.idCheckpoint);
             if (checkPoint.isWaitingColision == true)
             {
                 over = false;
             }
-            else if(over != false)
+            else if (over != false)
             {
                 over = true;
             }
         }
-        if(over == true)
+        if (over == true)
         {
             GameState = 2;
             Debug.Log("fin3");
@@ -67,7 +93,7 @@ public class GameManager : MonoBehaviour
             Application.Quit();
             Debug.Log("fin5");
             yield break;
-        }
+        }*/
         yield break;
     }
 }
