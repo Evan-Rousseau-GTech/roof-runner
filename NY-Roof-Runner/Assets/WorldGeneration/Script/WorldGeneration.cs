@@ -33,7 +33,8 @@ public class WorldGeneration : MonoBehaviour
                 if (i == 0 && j == 0)
                 {
                     //À mettre dans le game manager
-                    character.SetPosition(new Vector3(batiment.transform.position.x, batiment.transform.position.y + batiment.transform.localScale.y, batiment.transform.position.z));
+                    character.SetCheckpoint(new Vector3(batiment.transform.position.x, rand + 2, batiment.transform.position.z));
+                    character.ResetPosition();
                 } else
                 {
                     // Set roof obstacles

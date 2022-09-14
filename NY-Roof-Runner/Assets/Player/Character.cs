@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using Image = UnityEngine.UI.Image;
 
 public class Character : MonoBehaviour
 {
@@ -25,12 +27,15 @@ public class Character : MonoBehaviour
 
     Rigidbody rb;
 
+    GameObject fadePanel;
+    Vector3 currentCheckpoint;
     // Start is called before the first frame update
     void Start()
     {
         isJumping = false;
         rb = GetComponent<Rigidbody>();
         speed = speedWalking;
+        fadePanel = GameObject.Find("Fade");
     }
 
     // Update is called once per frame
@@ -41,6 +46,15 @@ public class Character : MonoBehaviour
         
         position.y = rb.position.y;
         transform.SetPositionAndRotation(position, Quaternion.Euler(0, rotationX, 0));
+        if(position.y - 1.6f < 15f)
+        { 
+            float fadePercent = 1 - ((position.y - 1.6f) / 15f);
+            fadePanel.GetComponent<Image>().color = new Vector4(255,255,255,fadePercent);
+        }
+        if (position.y - 1.6f < 0f)
+        {
+            ResetPosition();
+        }
     }
 
 
@@ -168,5 +182,16 @@ public class Character : MonoBehaviour
     {
         this.position = position;
         rb.position = position;
+    }
+
+    public void SetCheckpoint(Vector3 position)
+    {
+        currentCheckpoint = position;
+    }
+
+    public void ResetPosition()
+    {
+        SetPosition(currentCheckpoint);
+        fadePanel.GetComponent<Image>().color = new Vector4(255, 255, 255, 0);
     }
 }
