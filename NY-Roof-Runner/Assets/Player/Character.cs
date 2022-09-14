@@ -110,7 +110,7 @@ public class Character : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                rb.velocity = Vector3.up * jumpSpeed; //Permet le saut
+                rb.velocity = Vector3.up * jumpSpeed * 2; //Permet le saut
                 isJumping = true;
             }
             CheckKeyUp();
@@ -184,6 +184,7 @@ public class Character : MonoBehaviour
         if (collision.gameObject.tag == "Checkpoint")
         {
             collision.gameObject.GetComponent<CheckPoint>().isWaitingColision = false;
+            SetCheckpoint(collision.transform.position);
         }
     }
 

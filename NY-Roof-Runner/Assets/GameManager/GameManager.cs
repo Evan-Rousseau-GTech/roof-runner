@@ -65,7 +65,6 @@ public class GameManager : MonoBehaviour
         }
         // Player.transform.position = new Vector3(Player.transform.position.x, Player.transform.position.y, Player.transform.position.z - 0.001f);
     }
-    /*
     void createCheckpoint()
     {
         CheckPoint NewCheckpoint = new CheckPoint();//new Vector3(Player.gameObject.transform.position.x, Player.gameObject.transform.position.y, Player.gameObject.transform.position.z + 5)
@@ -73,11 +72,17 @@ public class GameManager : MonoBehaviour
         IDcheckPoint = IDcheckPoint + 1;
         GameCheckpointList.Add(NewCheckpoint);
     }
-    */
+
+    public void AddCheckpoint(CheckPoint checkPoint)
+    {
+        checkPoint.idCheckpoint = IDcheckPoint + 1;
+        IDcheckPoint = IDcheckPoint + 1;
+        GameCheckpointList.Add(checkPoint);
+    }
 
     IEnumerator CheckEndGame()
     {
-        /*bool over = true;
+        bool over = true;
         foreach (CheckPoint checkPoint in GameCheckpointList)
         {
             Debug.Log("fin2" + checkPoint.isWaitingColision + " id" + checkPoint.idCheckpoint);
@@ -99,7 +104,7 @@ public class GameManager : MonoBehaviour
             Application.Quit();
             Debug.Log("fin5");
             yield break;
-        }*/
+        }
         yield break;
     }
 }

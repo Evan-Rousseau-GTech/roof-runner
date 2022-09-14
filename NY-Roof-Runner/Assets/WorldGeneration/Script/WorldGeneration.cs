@@ -8,8 +8,10 @@ public class WorldGeneration : MonoBehaviour
     public GameObject blockObject;
     public GameObject roofObject;
     public GameObject fanObject;
+    public GameObject checkpointObject;
     public GameObject map;
     public Character character;
+    public GameManager manager;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,8 +19,10 @@ public class WorldGeneration : MonoBehaviour
         // Generate floor
         GameObject floor = Instantiate(floorObject, new Vector3(0, 0, 0), Quaternion.identity);
         floor.transform.parent = map.transform;
-        
-        for(int i = 0; i < 10; i++)
+        GameObject buildings = new GameObject("Buildings");
+        GameObject checkpoints = new GameObject("Checkpoints");
+        int nbCheckpoints = 0;
+        for (int i = 0; i < 10; i++)
         {
             for(int j = 0; j < 10; j++)
             {
@@ -37,6 +41,25 @@ public class WorldGeneration : MonoBehaviour
                     character.ResetPosition();
                 } else
                 {
+
+                    if(nbCheckpoints < 5)
+                    {
+                        int pourc = Random.Range(1, 100);
+                        if(pourc <= 10)
+                        {
+                            if(nbCheckpoints == 0)
+                            {
+                                checkpointObject.transform.SetPositionAndRotation(new Vector3(batiment.transform.position.x, rand + 3, batiment.transform.position.z), Quaternion.identity);
+                                manager.AddCheckpoint(checkpointObject.transform.Find("PRECheckpoint").transform.Find("CheckpointSprite").GetComponent<CheckPoint>());
+                            }
+                            else
+                            {
+                                GameObject newCheckpointObject = Instantiate(checkpointObject, new Vector3(batiment.transform.position.x, rand + 3, batiment.transform.position.z), Quaternion.identity); 
+                                manager.AddCheckpoint(newCheckpointObject.transform.Find("PRECheckpoint").transform.Find("CheckpointSprite").GetComponent<CheckPoint>());
+                            }
+                            nbCheckpoints++;
+                        }
+                    }
                     // Set roof obstacles
                     GameObject obstacle = Instantiate(fanObject, new Vector3((i - 5) * 15f + 7.5f, rand + 1f, (j - 5) * 15f + 7.5f), Quaternion.identity);
                     float[] obstacleSizes = new float[3] { 0.8f, 1f, 1.2f };
@@ -54,7 +77,9 @@ public class WorldGeneration : MonoBehaviour
                     obstacle.transform.SetPositionAndRotation(obstPos, Quaternion.Euler(new Vector3(0,obstRot,0)));
                     obstacle.transform.parent = building.transform;
                 }
-                building.transform.parent = map.transform;
+                building.transform.parent = buildings.transform;
+                buildings.transform.parent = map.transform;
+                checkpoints.transform.parent = map.transform;
             }
         }
     }
