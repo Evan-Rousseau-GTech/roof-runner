@@ -6,6 +6,8 @@ using Image = UnityEngine.UI.Image;
 
 public class Character : MonoBehaviour
 {
+    public Vector3 positionForward;
+    public Vector3 positionRight;
     public Vector3 position;
 
     float speedWalking = 7.5f;
@@ -34,6 +36,8 @@ public class Character : MonoBehaviour
     {
         isJumping = false;
         rb = GetComponent<Rigidbody>();
+        rb.position = this.position;
+        //rb.position = this.position;
         speed = speedWalking;
         fadePanel = GameObject.Find("Fade");
     }
@@ -43,18 +47,13 @@ public class Character : MonoBehaviour
     {
         SetCamera();
         CheckInput();
+
+
+        transform.eulerAngles = new Vector3(0, rotationX, 0);
+        float old = rb.velocity.y;
+        rb.velocity = positionForward + positionRight;
+        rb.velocity = new Vector3(rb.velocity.x, old, rb.velocity.z);
         
-        position.y = rb.position.y;
-        transform.SetPositionAndRotation(position, Quaternion.Euler(0, rotationX, 0));
-        if(position.y - 1.6f < 15f)
-        { 
-            float fadePercent = 1 - ((position.y - 1.6f) / 15f);
-            fadePanel.GetComponent<Image>().color = new Vector4(255,255,255,fadePercent);
-        }
-        if (position.y - 1.6f < 0f)
-        {
-            ResetPosition();
-        }
     }
 
 
@@ -76,27 +75,33 @@ public class Character : MonoBehaviour
 
             if (Input.GetKey(KeyCode.Z))
             {
-                position += transform.forward * speed * Time.deltaTime;
+                positionForward = transform.forward * speed;
+
+                //position += transform.forward * speed * Time.deltaTime;
                 lastDirectionForward = transform.forward;
             }
             if (Input.GetKey(KeyCode.S))
             {
-                position -= transform.forward * speed * Time.deltaTime;
+                positionForward = transform.forward * -speed;
+                //position -= transform.forward * speed * Time.deltaTime;
                 lastDirectionForward = -transform.forward;
             }
             if (Input.GetKey(KeyCode.Q))
             {
-                position -= transform.right * speed * Time.deltaTime;
+                positionRight = transform.right * -speed;
+                //position -= transform.right * speed * Time.deltaTime;
                 lastDirectionRight = -transform.right;
             }
             if (Input.GetKey(KeyCode.D))
             {
-                position += transform.right * speed * Time.deltaTime;
+                positionRight = transform.right * speed;
+                //position += transform.right * speed * Time.deltaTime;
                 lastDirectionRight = transform.right;
 
             }
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                Debug.Log("jumpOui");
                 rb.velocity = Vector3.up * jumpSpeed; //Permet le saut
                 isJumping = true;
             }
@@ -105,8 +110,8 @@ public class Character : MonoBehaviour
         else
         {
             //Inertie du joueur
-            position += lastDirectionForward * speed * Time.deltaTime;
-            position += lastDirectionRight * speed * Time.deltaTime;
+            positionForward = lastDirectionForward * speed;
+            positionRight = lastDirectionRight * speed;
         }
 
     }
@@ -116,40 +121,48 @@ public class Character : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.Z))
         {
+            positionForward = Vector3.zero;
             lastDirectionForwardnull();
         }
 
         if (Input.GetKeyUp(KeyCode.S))
         {
+            positionForward = Vector3.zero;
             lastDirectionForwardnull();
         }
         if (Input.GetKeyUp(KeyCode.Q))
         {
+            positionRight = Vector3.zero;
             lastDirectionRightnull();
         }
         if (Input.GetKeyUp(KeyCode.D))
         {
+            positionRight = Vector3.zero;
             lastDirectionRightnull();
         }
     }
 
     Vector3 lastDirectionRightnull()
     {
-        return lastDirectionRight = Vector3.zero;
+        return lastDirectionRight = Vector3.zero; 
     }
 
     Vector3 lastDirectionForwardnull()
     {
-        return lastDirectionRight = Vector3.zero;
+        return lastDirectionForward = Vector3.zero;
     }
+
 
     void OnCollisionEnter(Collision collision)
     {
+
         if (collision.gameObject.tag == "Floor")
         {
             isJumping = false;
             lastDirectionForward = Vector3.zero;
             lastDirectionRight = Vector3.zero;
+            positionForward = Vector3.zero;
+            positionRight = Vector3.zero;
         }
 
         if (collision.gameObject.tag == "Wall")
@@ -181,7 +194,6 @@ public class Character : MonoBehaviour
     public void SetPosition(Vector3 position)
     {
         this.position = position;
-        rb.position = position;
     }
 
     public void SetCheckpoint(Vector3 position)
