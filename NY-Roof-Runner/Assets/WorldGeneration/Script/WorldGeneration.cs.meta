@@ -8,7 +8,7 @@ MonoImporter:
   - blockObject: {fileID: 8148377589886291593, guid: 7e3693d48b363d74b8aa0b0de7004208, type: 3}
   - roofObject: {fileID: 7796736102402888742, guid: 88254d7d47b8f7d4db37963fccbd6911, type: 3}
   - fanObject: {fileID: 3834194397610124001, guid: a4275dd230303b44db233ac973f697e7, type: 3}
-  executionOrder: 0
+  executionOrder: 200
   icon: {instanceID: 0}
   userData: 
   assetBundleName: 
