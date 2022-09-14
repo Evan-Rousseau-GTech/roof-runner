@@ -289,8 +289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GameState: 0
   IDcheckPoint: 1
-  GameCheckpointList:
-  - {fileID: 1225796214}
+  GameCheckpointList: []
   Player: {fileID: 1492748411}
   centerText: {fileID: 1087930519}
   timer: {fileID: 1696794127}
@@ -669,7 +668,7 @@ MonoBehaviour:
   blockObject: {fileID: 8148377589886291593, guid: 7e3693d48b363d74b8aa0b0de7004208, type: 3}
   roofObject: {fileID: 7796736102402888742, guid: 88254d7d47b8f7d4db37963fccbd6911, type: 3}
   fanObject: {fileID: 3834194397610124001, guid: a4275dd230303b44db233ac973f697e7, type: 3}
-  checkpointObject: {fileID: 2817616158190932860, guid: 7b2a041b64851684f9941f8f7b72b03f, type: 3}
+  checkpointObject: {fileID: 45594913}
   map: {fileID: 0}
   character: {fileID: 1492748411}
   manager: {fileID: 75248108}
@@ -750,17 +749,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 515228291611615905, guid: 7b2a041b64851684f9941f8f7b72b03f, type: 3}
   m_PrefabInstance: {fileID: 1225796212}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1225796214 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 757513062351961431, guid: 7b2a041b64851684f9941f8f7b72b03f, type: 3}
-  m_PrefabInstance: {fileID: 1225796212}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 003b8ad10a9db474ea03ced147fb2186, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1492748410
 GameObject:
   m_ObjectHideFlags: 0
@@ -794,7 +782,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71ee8f3b0215e044cbcf35477d1cb3a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 0, y: 0, z: 0}
   sensitivity: 2000
 --- !u!136 &1492748412
 CapsuleCollider:
