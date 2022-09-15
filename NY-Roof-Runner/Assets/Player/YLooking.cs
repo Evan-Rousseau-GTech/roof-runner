@@ -14,8 +14,11 @@ public class YLooking : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        SetCamera();
-        transform.localEulerAngles = new Vector3(rotationY, 0, 0);
+        if(GameManager.GameState == 1)
+        {
+            SetCamera();
+            transform.localEulerAngles = new Vector3(rotationY, 0, 0);
+        }
     }
 
     //Set la rotation Y en fonction de la souris

@@ -2,20 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour 
 {
-    [SerializeField] int GameState = 0; //0 = pas commencer, 1 = vient de commencer,2 = partie fini,3 = fermer le jeu
+    public static int GameState = 0; //0 = pas commencer, 1 = vient de commencer,2 = partie fini,3 = fermer le jeu
+    public static float startTime = 0;
     [SerializeField] int IDcheckPoint = 1;
     [SerializeField] List<CheckPoint> GameCheckpointList = new List<CheckPoint>();
     [SerializeField] Character Player;
 
-    [SerializeField] TMP_Text centerText;
-    [SerializeField] TMP_Text timer;
+    [SerializeField] Text centerText;
+    [SerializeField] Text timer;
+    [SerializeField] Text seedText;
 
+    float timeSinceStart = 0;
     // Start is called before the first frame update
     void Start()
     {
+        seedText.text = "SEED: " + Seed.seed.ToString();
         foreach (CheckPoint checkPoint in GameCheckpointList)
         {
             checkPoint.idCheckpoint = IDcheckPoint;
@@ -31,32 +36,33 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(GameState == 0)
+        timeSinceStart = Time.realtimeSinceStartup - startTime;
+        int countdown = 3 - (int)timeSinceStart;
+        if (GameManager.GameState == 0 || countdown == 0 || countdown == -1)
         {
-            int countdown = 5 - (int)Time.realtimeSinceStartup;
             if(countdown > 0)
             {
-                centerText.text = countdown.ToString();
+                if(countdown < 4) centerText.text = countdown.ToString();
             }
             else if(countdown == 0)
             {
-                centerText.text = "GO";
-                float time = Time.realtimeSinceStartup - 5;
+                centerText.text = "<color=#84EB9E>GO !</color>";
+                float time = timeSinceStart - 3;
                 string minutes = ((int)time / 60).ToString();
                 string secondes = ((int)(time % 60)).ToString();
                 if (secondes.Length == 1) secondes = "0" + secondes;
                 string centisecondes = ((int)((time % 1) * 100)).ToString();
                 timer.text = minutes + ":" + secondes + ":" + centisecondes;
+                GameManager.GameState = 1;
             }
             else
             {
                 centerText.text = null;
-                GameState = 1;
             }
         }
-        if(GameState == 1)
+        if(GameManager.GameState == 1)
         {
-            float time = Time.realtimeSinceStartup - 5;
+            float time = timeSinceStart - 3;
             string minutes = ((int)time / 60).ToString();
             string secondes = ((int)(time % 60)).ToString();
             if (secondes.Length == 1) secondes = "0" + secondes;
@@ -85,7 +91,7 @@ public class GameManager : MonoBehaviour
         bool over = true;
         foreach (CheckPoint checkPoint in GameCheckpointList)
         {
-            Debug.Log("fin2" + checkPoint.isWaitingColision + " id" + checkPoint.idCheckpoint);
+            //Debug.Log("fin2" + checkPoint.isWaitingColision + " id" + checkPoint.idCheckpoint);
             if (checkPoint.isWaitingColision == true)
             {
                 over = false;
@@ -95,14 +101,15 @@ public class GameManager : MonoBehaviour
                 over = true;
             }
         }
-        if (over == true)
+        if (over == true && GameManager.GameState < 2)
         {
-            GameState = 2;
-            Debug.Log("fin3");
+            timer.text = "<color=#84EB9E>"+timer.text+"</color>";
+            GameManager.GameState = 2;
+            Debug.Log("fin");
             new WaitForSeconds(3);
-            Debug.Log("fin4");
+            /// Debug.Log("fin4");
             Application.Quit();
-            Debug.Log("fin5");
+            // Debug.Log("fin5");
             yield break;
         }
         yield break;

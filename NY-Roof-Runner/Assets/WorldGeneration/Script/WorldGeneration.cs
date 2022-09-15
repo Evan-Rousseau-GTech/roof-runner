@@ -15,6 +15,7 @@ public class WorldGeneration : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Random.seed = Seed.seed;
         map = new GameObject("Map");
         // Generate floor
         GameObject floor = Instantiate(floorObject, new Vector3(0, 0, 0), Quaternion.identity);
