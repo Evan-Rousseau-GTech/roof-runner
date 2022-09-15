@@ -10,12 +10,14 @@ public class MenuManager : MonoBehaviour
 
     public Button startButton;
     public Button loadButton;
+    public Button ControlButton;
     public GameObject seedInput;
     // Start is called before the first frame update
     void Start()
     {
         startButton.onClick.AddListener(StartGame);
         loadButton.onClick.AddListener(LoadGame);
+        ControlButton.onClick.AddListener(LoadControlMenu);
     }
 
     // Update is called once per frame
@@ -43,5 +45,9 @@ public class MenuManager : MonoBehaviour
         {
             Debug.Log("Invalid seed");
         }
+    }
+    void LoadControlMenu()
+    {
+        //SceneManager.LoadScene("MenuControls");
     }
 }
