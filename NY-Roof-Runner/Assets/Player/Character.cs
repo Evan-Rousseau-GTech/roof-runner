@@ -182,14 +182,18 @@ public class Character : MonoBehaviour
             positionRight = Vector3.zero;
         }
 
-        if (collision.gameObject.tag == "Checkpoint")
+
+    }
+    public void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("trigger !");
+
+        if (other.gameObject.tag == "Checkpoint")
         {
-            Debug.Log("Checkpoint !");
-            collision.gameObject.GetComponent<CheckPoint>().isWaitingColision = false;
-            SetCheckpoint(collision.transform.position);
+            other.gameObject.GetComponent<CheckPoint>().isWaitingColision = false;
+            SetCheckpoint(other.transform.position);
         }
     }
-
     //Set la rotation X en fonction de la souris
     public void SetCamera()
     {

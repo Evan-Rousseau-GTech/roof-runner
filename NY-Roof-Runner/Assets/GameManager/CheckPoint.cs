@@ -9,6 +9,7 @@ public class CheckPoint : MonoBehaviour
     [SerializeField] GameObject PrefabCheckpoint;
     [SerializeField] Material ThisMaterial;
     [SerializeField] Material NewMaterial;
+    [SerializeField] Light ThisLight;
     [SerializeField] MeshRenderer ThisMeshBody;
     [SerializeField] MeshRenderer ThisMeshBot;
     [SerializeField] MeshRenderer ThisMeshTop;
@@ -29,7 +30,8 @@ public class CheckPoint : MonoBehaviour
     {
         if(isWaitingColision == false)
         {
-            
+            ThisLight.color = Color.red;
+            ThisLight.intensity = 3;
             ThisMeshBody.material = NewMaterial;
             ThisMeshBot.material = NewMaterial;
             ThisMeshTop.material = NewMaterial;
