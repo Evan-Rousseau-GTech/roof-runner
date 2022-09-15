@@ -186,7 +186,7 @@ public class Character : MonoBehaviour
     }
     public void OnTriggerEnter(Collider other)
     {
-        Debug.Log("trigger !");
+       // Debug.Log("trigger !");
 
         if (other.gameObject.tag == "Checkpoint")
         {
