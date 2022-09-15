@@ -18,8 +18,8 @@ public class WorldGeneration : MonoBehaviour
         Random.seed = Seed.seed;
         map = new GameObject("Map");
         // Generate floor
-        GameObject floor = Instantiate(floorObject, new Vector3(0, 0, 0), Quaternion.identity);
-        floor.transform.parent = map.transform;
+        //GameObject floor = Instantiate(floorObject, new Vector3(0, 0, 0), Quaternion.identity);
+        //floor.transform.parent = map.transform;
         GameObject buildings = new GameObject("Buildings");
         GameObject checkpoints = new GameObject("Checkpoints");
         int nbCheckpoints = 0;

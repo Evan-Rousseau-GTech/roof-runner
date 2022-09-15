@@ -7,13 +7,15 @@ public class CheckPoint : MonoBehaviour
     [SerializeField] public bool isWaitingColision = true;
     [SerializeField] public int idCheckpoint = 0;
     [SerializeField] GameObject PrefabCheckpoint;
-    [SerializeField] Material newMatrial;
-    [SerializeField] MeshRenderer ThisMEsh;
+    [SerializeField] Material ThisMaterial;
+    [SerializeField] Material NewMaterial;
+    [SerializeField] MeshRenderer ThisMeshBody;
+    [SerializeField] MeshRenderer ThisMeshBot;
+    [SerializeField] MeshRenderer ThisMeshTop;
     [SerializeField] ParticleSystem ThisParticules;
     // Start is called before the first frame update
     void Start()
     {
-
     }
     public CheckPoint()//Vector3 Pos
     {
@@ -27,7 +29,10 @@ public class CheckPoint : MonoBehaviour
     {
         if(isWaitingColision == false)
         {
-            ThisMEsh.material = newMatrial;
+            
+            ThisMeshBody.material = NewMaterial;
+            ThisMeshBot.material = NewMaterial;
+            ThisMeshTop.material = NewMaterial;
             ThisParticules.enableEmission = false;
         }
 

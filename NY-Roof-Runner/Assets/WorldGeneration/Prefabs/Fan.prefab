@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8910764418017722226}
   - component: {fileID: 1564323596108088491}
   - component: {fileID: 8320691136709697779}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Out
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 5200076969562373358}
   - component: {fileID: 6044935664067124635}
   - component: {fileID: 8084059148626911694}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Fan
   m_TagString: Floor
   m_Icon: {fileID: 0}
@@ -223,6 +223,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 446b1d0bb4b000e488b349836250b7ce, type: 3}
       propertyPath: m_Name
       value: RoofFan
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 446b1d0bb4b000e488b349836250b7ce, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 446b1d0bb4b000e488b349836250b7ce, type: 3}

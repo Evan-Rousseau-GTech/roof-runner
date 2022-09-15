@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        seedText.text = "SEED: " + Seed.seed.ToString();
+        //seedText.text = "SEED: " + Seed.seed.ToString();
         foreach (CheckPoint checkPoint in GameCheckpointList)
         {
             checkPoint.idCheckpoint = IDcheckPoint;

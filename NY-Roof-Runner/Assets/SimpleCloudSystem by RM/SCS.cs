@@ -18,7 +18,7 @@ public class SCS : MonoBehaviour {
 
 
 
-		gameObject.transform.position = Player.transform.position;
+		gameObject.transform.position = new Vector3(Player.transform.position.x, Player.transform.position.y, Player.transform.position.z);
 
 		transform.Rotate(0,Time.deltaTime*CloudsSpeed ,0); 
 	}

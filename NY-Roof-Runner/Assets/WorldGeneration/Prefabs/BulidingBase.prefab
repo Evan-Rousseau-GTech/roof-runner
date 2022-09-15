@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7894532698633183406}
   - component: {fileID: 3985909076812515952}
   - component: {fileID: 8317461725135824972}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,7 +110,7 @@ GameObject:
   - component: {fileID: 6633035916848796526}
   - component: {fileID: 8140160329447100898}
   - component: {fileID: 5037440997547264853}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Plane (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,7 +208,7 @@ GameObject:
   - component: {fileID: 2548245699632685317}
   - component: {fileID: 5589909209140078934}
   - component: {fileID: 7751275572447136174}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Plane (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -306,7 +306,7 @@ GameObject:
   - component: {fileID: 6450151297005255988}
   - component: {fileID: 774583823963481387}
   - component: {fileID: 688565016611812964}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Plane (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -405,7 +405,7 @@ GameObject:
   - component: {fileID: 8148377589886291595}
   - component: {fileID: 8148377589886291592}
   - component: {fileID: -5937758426396383769}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BulidingBase
   m_TagString: Wall
   m_Icon: {fileID: 0}
