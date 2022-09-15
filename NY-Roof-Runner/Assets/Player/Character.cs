@@ -6,23 +6,37 @@ using Image = UnityEngine.UI.Image;
 
 public class Character : MonoBehaviour
 {
-    Vector3 positionForward;
-    Vector3 positionRight;
+    Vector3 velocityForward;
+    Vector3 velocityRight;
     Vector3 position;
 
-    float speedWalking = 7.5f;
+    float forceWalking = 40f;
 
-    float speedRunning = 15f;
+    float forceRunning = 70f;
 
-    float jumpSpeed = 5f;
+    float forceFalling = 10f;
 
-    bool isJumping; 
+    float jumpForce = 5f;
+
+    bool isFalling;
+
+    bool isWalling;
+
+    bool isJumping;
+
+    bool wallJumping;
+
+    float oldY;
 
     float speed;
+
+    float lastSpeed;
 
     public float sensitivity;
 
     private float rotationX;
+
+    float timeToucheWall;
 
     Vector3 lastDirectionForward;
     Vector3 lastDirectionRight;
@@ -34,28 +48,35 @@ public class Character : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        isJumping = false;
+        isFalling = false;
+        wallJumping = false;
         rb = GetComponent<Rigidbody>();
-        rb.position = this.position;
-        speed = speedWalking;
-        fadePanel = GameObject.Find("Fade");
+        //rb.position = this.position;
+        speed = forceWalking;
+        //fadePanel = GameObject.Find("Fade");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(GameManager.GameState == 1)
+        /*if(GameManager.GameState == 1)
         {
             SetCamera();
             CheckInput();
-        }
-
+        }*/
+        SetCamera();
+        CheckInput();
         transform.eulerAngles = new Vector3(0, rotationX, 0);
         float old = rb.velocity.y;
-        rb.velocity = positionForward + positionRight;
+        rb.velocity = velocityForward + velocityRight;
         rb.velocity = new Vector3(rb.velocity.x, old, rb.velocity.z);
 
-        if (rb.position.y - 1.6f < 15f)
+        /*Debug.Log("falling : " + isFalling);
+        Debug.Log("isWalling: " + isWalling);
+        Debug.Log("jump : " + isJumping);*/
+        
+
+        /*if (rb.position.y - 1.6f < 15f)
         {
             float fadePercent = 1 - ((rb.position.y - 1.6f) / 15f);
             fadePanel.GetComponent<Image>().color = new Vector4(255, 255, 255, fadePercent);
@@ -63,65 +84,78 @@ public class Character : MonoBehaviour
         if (rb.position.y - 1.6f < 0f)
         {
             ResetPosition();
-        }
+        }*/
     }
-
 
     //Vérifie les entrées du clavier puis fait avancer le personnage en fonction.
     public void CheckInput()
     {
-
-        if (!isJumping) 
+        if (Input.GetKey(KeyCode.LeftShift))
         {
-            //Verifie si le personnage court
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                speed = speedRunning;
-            }
-            else
-            {
-                speed = speedWalking;
-            }
-
-            if (Input.GetKey(KeyCode.Z))
-            {
-                positionForward = transform.forward * speed;
-
-                //position += transform.forward * speed * Time.deltaTime;
-                lastDirectionForward = transform.forward;
-            }
-            if (Input.GetKey(KeyCode.S))
-            {
-                positionForward = transform.forward * -speed;
-                //position -= transform.forward * speed * Time.deltaTime;
-                lastDirectionForward = -transform.forward;
-            }
-            if (Input.GetKey(KeyCode.Q))
-            {
-                positionRight = transform.right * -speed;
-                //position -= transform.right * speed * Time.deltaTime;
-                lastDirectionRight = -transform.right;
-            }
-            if (Input.GetKey(KeyCode.D))
-            {
-                positionRight = transform.right * speed;
-                //position += transform.right * speed * Time.deltaTime;
-                lastDirectionRight = transform.right;
-
-            }
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                rb.velocity = Vector3.up * jumpSpeed * 2; //Permet le saut
-                isJumping = true;
-            }
-            CheckKeyUp();
+            speed = forceRunning;
         }
         else
         {
-            //Inertie du joueur
-            positionForward = lastDirectionForward * speed;
-            positionRight = lastDirectionRight * speed;
+            speed = forceWalking;
         }
+
+        if (isFalling == true)
+        {
+            Debug.Log(lastDirectionRight);
+            rb.AddForce(lastDirectionForward * lastSpeed);
+            rb.AddForce(lastDirectionRight * lastSpeed);
+            speed = forceFalling;
+        }
+        else
+        {
+            CheckKeyUp();
+            if (!isWalling)
+            {
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); //Permet le saut
+                    isFalling = true;
+                    lastSpeed = speed;
+                }
+            }
+            
+        }
+
+        if (Input.GetKey(KeyCode.Z))
+        {
+            
+            rb.AddForce(rb.transform.forward * speed);
+            if (!isFalling)
+            {
+                lastDirectionForward = rb.transform.forward;
+            }
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            rb.AddForce(transform.forward * -speed);
+            if (!isFalling)
+            {
+                lastDirectionForward = -rb.transform.forward;
+            }
+        }
+        if (Input.GetKey(KeyCode.Q))
+        {
+            rb.AddForce(transform.right * -speed);
+            if (!isFalling)
+            {
+                lastDirectionRight = -rb.transform.right;
+            }
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            rb.AddForce(transform.right * speed);
+            if (!isFalling)
+            {
+                lastDirectionRight = rb.transform.forward;
+            }
+        }
+        
+        
 
     }
 
@@ -130,59 +164,108 @@ public class Character : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.Z))
         {
-            positionForward = Vector3.zero;
+            velocityForward = Vector3.zero;
             lastDirectionForwardnull();
         }
 
         if (Input.GetKeyUp(KeyCode.S))
         {
-            positionForward = Vector3.zero;
+            velocityForward = Vector3.zero;
             lastDirectionForwardnull();
         }
         if (Input.GetKeyUp(KeyCode.Q))
         {
-            positionRight = Vector3.zero;
+            velocityRight = Vector3.zero;
             lastDirectionRightnull();
         }
         if (Input.GetKeyUp(KeyCode.D))
         {
-            positionRight = Vector3.zero;
+            velocityRight = Vector3.zero;
             lastDirectionRightnull();
         }
     }
 
-    Vector3 lastDirectionRightnull()
+    void lastDirectionRightnull()
     {
-        return lastDirectionRight = Vector3.zero; 
+        lastDirectionRight = Vector3.zero; 
     }
 
-    Vector3 lastDirectionForwardnull()
+    void lastDirectionForwardnull()
     {
-        return lastDirectionForward = Vector3.zero;
+        lastDirectionForward = Vector3.zero;
     }
 
+    private void OnCollisionExit(Collision collision)
+    {
+        isFalling = true;
+        isWalling = false;
+    }
 
     void OnCollisionEnter(Collision collision)
     {
+        isFalling = false;
 
         if (collision.gameObject.tag == "Floor")
         {
-            isJumping = false;
+            isFalling = false;
+            wallJumping = true;
             lastDirectionForward = Vector3.zero;
             lastDirectionRight = Vector3.zero;
-            positionForward = Vector3.zero;
-            positionRight = Vector3.zero;
+            velocityForward = Vector3.zero;
+            velocityRight = Vector3.zero;
+        }
+
+        if (collision.gameObject.tag == "Checkpoint")
+        {
+            collision.gameObject.GetComponent<CheckPoint>().isWaitingColision = false;
         }
 
         if (collision.gameObject.tag == "Wall")
         {
-            lastDirectionForward = Vector3.zero;
-            lastDirectionRight = Vector3.zero;
-            positionForward = Vector3.zero;
-            positionRight = Vector3.zero;
+            timeToucheWall = Time.time;
+            wallJumping = true;
         }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        ContactPoint[] contactPoints = collision.contacts;
+        
+        isFalling = false;
+
+        if (collision.gameObject.tag == "Wall")
+        {
+            isWalling = true;
+            //Debug.Log(wallJumping);
+            if (Input.GetKey(KeyCode.Space) && wallJumping)
+            {
+
+                wallJumping = false;
+
+                lastSpeed = 100f;
+
+                Debug.Log(isFalling);
 
 
+                Vector3 reflectDirection = Vector3.Reflect(lastDirectionForward, contactPoints[0].normal);
+                rb.AddForce(reflectDirection * lastSpeed, ForceMode.VelocityChange);
+                lastDirectionForward = reflectDirection;
+
+                //lastDirectionRight = reflectDirection;
+                //lastDirectionRight = contactPoints[0].normal;
+
+                isFalling = true;
+
+            }
+            else
+            {
+                lastDirectionForward = Vector3.zero;
+                lastDirectionRight = Vector3.zero;
+                velocityForward = Vector3.zero;
+                velocityRight = Vector3.zero;
+            }
+
+        }
     }
     public void OnTriggerEnter(Collider other)
     {
@@ -224,4 +307,6 @@ public class Character : MonoBehaviour
         SetPosition(currentCheckpoint);
         fadePanel.GetComponent<Image>().color = new Vector4(255, 255, 255, 0);
     }
+
+    
 }
