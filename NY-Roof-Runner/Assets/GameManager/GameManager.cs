@@ -15,12 +15,21 @@ public class GameManager : MonoBehaviour
     [SerializeField] Text centerText;
     [SerializeField] Text timer;
     [SerializeField] Text seedText;
+    [SerializeField] Text highScoreText;
 
     float timeSinceStart = 0;
+    float highscore = 0;
     // Start is called before the first frame update
     void Start()
     {
-        //seedText.text = "SEED: " + Seed.seed.ToString();
+        highscore = SaveManager.getHighscore(Seed.seed);
+        string minutes = ((int)highscore / 60).ToString();
+        string secondes = ((int)(highscore % 60)).ToString();
+        if (secondes.Length == 1) secondes = "0" + secondes;
+        string centisecondes = ((int)((highscore % 1) * 100)).ToString();
+        if (centisecondes.Length == 1) centisecondes = "0" + centisecondes;
+        highScoreText.text = "HIGHSCORE: " + minutes + ":" + secondes + ":" + centisecondes;
+        seedText.text = "SEED: " + Seed.seed.ToString();
         foreach (CheckPoint checkPoint in GameCheckpointList)
         {
             checkPoint.idCheckpoint = IDcheckPoint;
@@ -52,6 +61,7 @@ public class GameManager : MonoBehaviour
                 string secondes = ((int)(time % 60)).ToString();
                 if (secondes.Length == 1) secondes = "0" + secondes;
                 string centisecondes = ((int)((time % 1) * 100)).ToString();
+                if (centisecondes.Length == 1) centisecondes = "0" + centisecondes;
                 timer.text = minutes + ":" + secondes + ":" + centisecondes;
                 GameManager.GameState = 1;
             }
@@ -67,6 +77,7 @@ public class GameManager : MonoBehaviour
             string secondes = ((int)(time % 60)).ToString();
             if (secondes.Length == 1) secondes = "0" + secondes;
             string centisecondes = ((int)((time % 1) * 100)).ToString();
+            if (centisecondes.Length == 1) centisecondes = "0" + centisecondes;
             timer.text = minutes + ":" + secondes + ":" + centisecondes;
         }
         // Player.transform.position = new Vector3(Player.transform.position.x, Player.transform.position.y, Player.transform.position.z - 0.001f);
@@ -103,6 +114,18 @@ public class GameManager : MonoBehaviour
         }
         if (over == true && GameManager.GameState < 2)
         {
+            float score = timeSinceStart - 3;
+            if ( score < highscore || highscore == 0)
+            {
+                SaveManager.setHighscore(Seed.seed, score);
+                centerText.text = "<color=#84EB9E>NEW RECORD !</color>";
+                string minutes = ((int)score / 60).ToString();
+                string secondes = ((int)(score % 60)).ToString();
+                if (secondes.Length == 1) secondes = "0" + secondes;
+                string centisecondes = ((int)((score % 1) * 100)).ToString();
+                if (centisecondes.Length == 1) centisecondes = "0" + centisecondes;
+                highScoreText.text = "HIGHSCORE: " + minutes + ":" + secondes + ":" + centisecondes;
+            }
             timer.text = "<color=#84EB9E>"+timer.text+"</color>";
             GameManager.GameState = 2;
             Debug.Log("fin");

@@ -184,6 +184,7 @@ public class Character : MonoBehaviour
 
         if (collision.gameObject.tag == "Checkpoint")
         {
+            Debug.Log("Checkpoint !");
             collision.gameObject.GetComponent<CheckPoint>().isWaitingColision = false;
             SetCheckpoint(collision.transform.position);
         }

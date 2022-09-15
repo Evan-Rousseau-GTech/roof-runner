@@ -1,0 +1,3 @@
+{ "seed": "0", "highscore": "90.69" }
+{ "seed": "1", "highscore": "60.42" }
+{ "seed": "2", "highscore": "120.00" }
