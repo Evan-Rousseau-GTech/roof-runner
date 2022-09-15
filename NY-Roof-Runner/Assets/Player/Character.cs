@@ -118,12 +118,10 @@ public class Character : MonoBehaviour
                     lastSpeed = speed;
                 }
             }
-            
         }
 
         if (Input.GetKey(KeyCode.Z))
         {
-            
             rb.AddForce(rb.transform.forward * speed);
             if (!isFalling)
             {
@@ -155,8 +153,6 @@ public class Character : MonoBehaviour
             }
         }
         
-        
-
     }
 
     //Vérifie si une des entrées est relaché puis réinitialise la direction actuelle
@@ -243,9 +239,6 @@ public class Character : MonoBehaviour
                 wallJumping = false;
 
                 lastSpeed = 100f;
-
-                Debug.Log(isFalling);
-
 
                 Vector3 reflectDirection = Vector3.Reflect(lastDirectionForward, contactPoints[0].normal);
                 rb.AddForce(reflectDirection * lastSpeed, ForceMode.VelocityChange);
