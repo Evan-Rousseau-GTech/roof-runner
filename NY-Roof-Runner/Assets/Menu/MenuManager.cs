@@ -48,6 +48,6 @@ public class MenuManager : MonoBehaviour
     }
     void LoadControlMenu()
     {
-        //SceneManager.LoadScene("MenuControls");
+        SceneManager.LoadScene("MenuControls");
     }
 }

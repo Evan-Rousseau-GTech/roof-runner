@@ -12,7 +12,7 @@ public class MenuControlManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Return.onClick.AddListener(LoadControlScene);
+        Return.onClick.AddListener(ReturnMainMenu);
     }
 
     // Update is called once per frame
