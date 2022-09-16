@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour 
 {
@@ -125,16 +126,24 @@ public class GameManager : MonoBehaviour
                 string centisecondes = ((int)((score % 1) * 100)).ToString();
                 if (centisecondes.Length == 1) centisecondes = "0" + centisecondes;
                 highScoreText.text = "HIGHSCORE: " + minutes + ":" + secondes + ":" + centisecondes;
+                highscore = score;
             }
             timer.text = "<color=#84EB9E>"+timer.text+"</color>";
             GameManager.GameState = 2;
             Debug.Log("fin");
             new WaitForSeconds(3);
             /// Debug.Log("fin4");
-            Application.Quit();
+            // Application.Quit();
             // Debug.Log("fin5");
+            Debug.Log(score+" " +highscore);
+            EndGameManager.timer = score;
+            EndGameManager.highScore = highscore;
+            //EndGameManager ThisEngame = new EndGameManager(score, highscore);
+            EndGameManager.LoadEndGameScene();
             yield break;
         }
         yield break;
     }
+
+
 }

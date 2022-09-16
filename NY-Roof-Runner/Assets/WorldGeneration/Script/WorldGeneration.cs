@@ -51,12 +51,14 @@ public class WorldGeneration : MonoBehaviour
                             if(nbCheckpoints == 0)
                             {
                                 checkpointObject.transform.SetPositionAndRotation(new Vector3(batiment.transform.position.x, rand + 3, batiment.transform.position.z), Quaternion.identity);
-                                manager.AddCheckpoint(checkpointObject.transform.Find("Body").GetComponent<CheckPoint>());
+                                manager.AddCheckpoint(checkpointObject.GetComponent<CheckPoint>());
+                                checkpointObject.transform.parent = checkpoints.transform;
                             }
                             else
                             {
                                 GameObject newCheckpointObject = Instantiate(checkpointObject, new Vector3(batiment.transform.position.x, rand + 3, batiment.transform.position.z), Quaternion.identity); 
-                                manager.AddCheckpoint(newCheckpointObject.transform.Find("Body").GetComponent<CheckPoint>());
+                                manager.AddCheckpoint(newCheckpointObject.GetComponent<CheckPoint>());
+                                newCheckpointObject.transform.parent = checkpoints.transform;
                             }
                             nbCheckpoints++;
                         }

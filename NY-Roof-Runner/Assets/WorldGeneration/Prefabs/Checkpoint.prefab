@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 2386277037305991971}
   - component: {fileID: 2066116409641495933}
   - component: {fileID: 1722341015084852272}
-  - component: {fileID: 7350537079687952352}
   - component: {fileID: 1893785704851987307}
   - component: {fileID: 7946879456956275421}
   m_Layer: 0
@@ -159,33 +158,11 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 3e-44, z: 1.8699e-41, w: 6e-44}
+  m_BoundingSphereOverride: {x: 0, y: 1.8e-44, z: 3.493e-42, w: 6e-44}
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &7350537079687952352
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1967006268589970738}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 003b8ad10a9db474ea03ced147fb2186, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isWaitingColision: 1
-  idCheckpoint: 0
-  PrefabCheckpoint: {fileID: 1967006268589970738}
-  ThisMaterial: {fileID: 2100000, guid: dc6840218a235d6438fc85d3d2d82218, type: 2}
-  NewMaterial: {fileID: 2100000, guid: ddd9b576d86f33247889e56eb9fc6336, type: 2}
-  ThisLight: {fileID: 1722341015084852272}
-  ThisMeshBody: {fileID: 2386277037305991971}
-  ThisMeshBot: {fileID: 4174653760631059348}
-  ThisMeshTop: {fileID: 1474135894125374388}
-  ThisParticules: {fileID: 1893785704851987307}
 --- !u!198 &1893785704851987307
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -4975,6 +4952,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4196362905655123646}
+  - component: {fileID: 5412799064077076306}
   m_Layer: 0
   m_Name: Checkpoint
   m_TagString: Checkpoint
@@ -5000,6 +4978,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5412799064077076306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4554951806169703079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 003b8ad10a9db474ea03ced147fb2186, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isWaitingColision: 1
+  idCheckpoint: 0
+  PrefabCheckpoint: {fileID: 1967006268589970738}
+  ThisMaterial: {fileID: 2100000, guid: dc6840218a235d6438fc85d3d2d82218, type: 2}
+  NewMaterial: {fileID: 2100000, guid: ddd9b576d86f33247889e56eb9fc6336, type: 2}
+  ThisLight: {fileID: 1722341015084852272}
+  ThisMeshBody: {fileID: 2386277037305991971}
+  ThisMeshBot: {fileID: 4174653760631059348}
+  ThisMeshTop: {fileID: 1474135894125374388}
+  ThisParticules: {fileID: 1893785704851987307}
 --- !u!1 &7909659049051221688
 GameObject:
   m_ObjectHideFlags: 0
