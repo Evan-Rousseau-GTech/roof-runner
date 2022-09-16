@@ -10,11 +10,11 @@ public class Character : MonoBehaviour
     Vector3 velocityRight;
     Vector3 position;
 
-    float forceWalking = 40f;
+    float forceWalking = 35f;
 
-    float forceRunning = 70f;
+    float forceRunning = 60f;
 
-    float forceFalling = 10f;
+    float forceFalling = 20f;
 
     float jumpForce = 5f;
 
@@ -53,19 +53,17 @@ public class Character : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         //rb.position = this.position;
         speed = forceWalking;
-        //fadePanel = GameObject.Find("Fade");
+        fadePanel = GameObject.Find("Fade");
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*if(GameManager.GameState == 1)
+        if(GameManager.GameState == 1)
         {
-            SetCamera();
             CheckInput();
-        }*/
+        }
         SetCamera();
-        CheckInput();
         transform.eulerAngles = new Vector3(0, rotationX, 0);
         float old = rb.velocity.y;
         rb.velocity = velocityForward + velocityRight;
@@ -76,15 +74,15 @@ public class Character : MonoBehaviour
         Debug.Log("jump : " + isJumping);*/
         
 
-        /*if (rb.position.y - 1.6f < 15f)
+        if (rb.position.y - 2.8f < 15f)
         {
-            float fadePercent = 1 - ((rb.position.y - 1.6f) / 15f);
+            float fadePercent = 1 - ((rb.position.y - 2.8f) / 15f);
             fadePanel.GetComponent<Image>().color = new Vector4(255, 255, 255, fadePercent);
         }
-        if (rb.position.y - 1.6f < 0f)
+        if (rb.position.y - 2.8f < 0f)
         {
             ResetPosition();
-        }*/
+        }
     }
 
     //Vérifie les entrées du clavier puis fait avancer le personnage en fonction.
@@ -101,7 +99,7 @@ public class Character : MonoBehaviour
 
         if (isFalling == true)
         {
-            Debug.Log(lastDirectionRight);
+            //Debug.Log(lastDirectionRight);
             rb.AddForce(lastDirectionForward * lastSpeed);
             rb.AddForce(lastDirectionRight * lastSpeed);
             speed = forceFalling;
@@ -210,14 +208,9 @@ public class Character : MonoBehaviour
             velocityForward = Vector3.zero;
             velocityRight = Vector3.zero;
         }
-
-        if (collision.gameObject.tag == "Checkpoint")
+        else if (collision.gameObject.tag == "Wall")
         {
-            collision.gameObject.GetComponent<CheckPoint>().isWaitingColision = false;
-        }
-
-        if (collision.gameObject.tag == "Wall")
-        {
+            Debug.Log("Wall");
             timeToucheWall = Time.time;
             wallJumping = true;
         }

@@ -14,11 +14,6 @@ public class YLooking : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*if(GameManager.GameState == 1)
-        {
-            SetCamera();
-            transform.localEulerAngles = new Vector3(rotationY, 0, 0);
-        }*/
         SetCamera();
         transform.localEulerAngles = new Vector3(rotationY, 0, 0);
     }

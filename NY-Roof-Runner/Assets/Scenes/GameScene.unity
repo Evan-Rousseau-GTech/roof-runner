@@ -1009,6 +1009,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sensitivity: 2000
+  fadePanel: {fileID: 1585130284}
 --- !u!136 &1492748412
 CapsuleCollider:
   m_ObjectHideFlags: 0

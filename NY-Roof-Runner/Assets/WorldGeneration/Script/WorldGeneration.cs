@@ -63,7 +63,7 @@ public class WorldGeneration : MonoBehaviour
                     }
                     // Set roof obstacles
                     GameObject obstacle = Instantiate(fanObject, new Vector3((i - 5) * 15f + 7.5f, rand + 1f, (j - 5) * 15f + 7.5f), Quaternion.identity);
-                    float[] obstacleSizes = new float[3] { 0.8f, 1f, 1.2f };
+                    float[] obstacleSizes = new float[3] { 1f, 1.1f, 1.2f };
                     float obstSize = obstacleSizes[Random.Range(0, 2)];
                     obstacle.transform.localScale = new Vector3(obstSize, obstSize, obstSize);
                     Vector3[] obstaclePositions = new Vector3[4] 
