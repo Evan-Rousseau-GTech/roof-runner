@@ -11,13 +11,12 @@ GameObject:
   - component: {fileID: 3086149493212080888}
   - component: {fileID: 1202628671524205382}
   - component: {fileID: 2386277037305991971}
-  - component: {fileID: 2066116409641495933}
   - component: {fileID: 1722341015084852272}
   - component: {fileID: 1893785704851987307}
   - component: {fileID: 7946879456956275421}
   m_Layer: 0
   m_Name: Body
-  m_TagString: Checkpoint
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -87,20 +86,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &2066116409641495933
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1967006268589970738}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 1.2
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
 --- !u!108 &1722341015084852272
 Light:
   m_ObjectHideFlags: 0
@@ -4953,6 +4938,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4196362905655123646}
   - component: {fileID: 5412799064077076306}
+  - component: {fileID: 1295261233421485339}
   m_Layer: 0
   m_Name: Checkpoint
   m_TagString: Checkpoint
@@ -5000,6 +4986,20 @@ MonoBehaviour:
   ThisMeshBot: {fileID: 4174653760631059348}
   ThisMeshTop: {fileID: 1474135894125374388}
   ThisParticules: {fileID: 1893785704851987307}
+--- !u!136 &1295261233421485339
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4554951806169703079}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 1
+  m_Height: 2.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.25, z: 0}
 --- !u!1 &7909659049051221688
 GameObject:
   m_ObjectHideFlags: 0
@@ -5013,7 +5013,7 @@ GameObject:
   - component: {fileID: 4174653760631059348}
   m_Layer: 0
   m_Name: Bot
-  m_TagString: Checkpoint
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5096,7 +5096,7 @@ GameObject:
   - component: {fileID: 1474135894125374388}
   m_Layer: 0
   m_Name: Top
-  m_TagString: Checkpoint
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

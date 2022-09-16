@@ -74,14 +74,12 @@ public class Character : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*if(GameManager.GameState == 1)
+        if(GameManager.GameState == 1)
         {
-            SetCamera();
             CheckInput();
-        }*/
+        }
 
         SetCamera();
-        CheckInput();
         transform.eulerAngles = new Vector3(0, rotationX, 0);
         float old = rb.velocity.y;
         rb.velocity = velocityForward + velocityRight;
