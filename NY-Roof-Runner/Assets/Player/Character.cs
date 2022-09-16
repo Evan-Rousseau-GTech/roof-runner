@@ -6,19 +6,23 @@ using Image = UnityEngine.UI.Image;
 
 public class Character : MonoBehaviour
 {
+    public GameObject Camera;
+
     Vector3 velocityForward;
     Vector3 velocityRight;
     Vector3 position;
 
-    float forceWalking = 35f;
+    float forceWalking = 100f;
 
-    float forceRunning = 60f;
+    float forceRunning = 200f;
 
-    float forceFalling = 20f;
+    float forceFalling = 40f;
 
-    float jumpForce = 5f;
+    float jumpForce = 7f;
 
     bool isFalling;
+
+    bool jumpInVoid;
 
     bool isWalling;
 
@@ -36,7 +40,9 @@ public class Character : MonoBehaviour
 
     private float rotationX;
 
-    float timeToucheWall;
+    float timeTouche;
+
+    Vector3 stayWall;
 
     Vector3 lastDirectionForward;
     Vector3 lastDirectionRight;
@@ -46,43 +52,71 @@ public class Character : MonoBehaviour
     GameObject fadePanel;
     Vector3 currentCheckpoint;
     // Start is called before the first frame update
+
+    private void Awake()
+    {
+        Application.targetFrameRate = 120;
+
+    }
+
     void Start()
     {
+        Camera = GameObject.Find("Main Camera");
         isFalling = false;
         wallJumping = false;
         rb = GetComponent<Rigidbody>();
         //rb.position = this.position;
         speed = forceWalking;
         fadePanel = GameObject.Find("Fade");
+        timeTouche = Time.time;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(GameManager.GameState == 1)
+        /*if(GameManager.GameState == 1)
         {
+            SetCamera();
             CheckInput();
-        }
+        }*/
+
         SetCamera();
+        CheckInput();
         transform.eulerAngles = new Vector3(0, rotationX, 0);
         float old = rb.velocity.y;
         rb.velocity = velocityForward + velocityRight;
         rb.velocity = new Vector3(rb.velocity.x, old, rb.velocity.z);
 
-        /*Debug.Log("falling : " + isFalling);
-        Debug.Log("isWalling: " + isWalling);
-        Debug.Log("jump : " + isJumping);*/
-        
-
-        if (rb.position.y - 2.8f < 15f)
+        if (jumpInVoid)
         {
-            float fadePercent = 1 - ((rb.position.y - 2.8f) / 15f);
+            if ((Time.time - timeTouche) < 0.5)
+            {
+                jumpInVoid = false;
+                timeTouche = Time.time;
+            }
+            else
+            {
+                timeTouche = Time.time;
+            }
+        }
+
+        Debug.Log("falling : " + isFalling);
+        /*Debug.Log("isWalling: " + isWalling);
+        Debug.Log("jump : " + isJumping);
+
+        Debug.Log("speed : " + speed);*/
+
+
+        if (rb.position.y - 1.6f < 15f)
+        {
+            float fadePercent = 1 - ((rb.position.y - 1.6f) / 15f);
             fadePanel.GetComponent<Image>().color = new Vector4(255, 255, 255, fadePercent);
         }
-        if (rb.position.y - 2.8f < 0f)
+        if (rb.position.y - 1.6f < 0f)
         {
             ResetPosition();
         }
+
     }
 
     //Vérifie les entrées du clavier puis fait avancer le personnage en fonction.
@@ -150,7 +184,7 @@ public class Character : MonoBehaviour
                 lastDirectionRight = rb.transform.forward;
             }
         }
-        
+
     }
 
     //Vérifie si une des entrées est relaché puis réinitialise la direction actuelle
@@ -179,9 +213,17 @@ public class Character : MonoBehaviour
         }
     }
 
+    void directionNull()
+    {
+        velocityForward = Vector3.zero;
+        velocityRight = Vector3.zero;
+        lastDirectionForwardnull();
+        lastDirectionRightnull();
+    }
+
     void lastDirectionRightnull()
     {
-        lastDirectionRight = Vector3.zero; 
+        lastDirectionRight = Vector3.zero;
     }
 
     void lastDirectionForwardnull()
@@ -197,50 +239,86 @@ public class Character : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.tag == "Untagged")
+        {
+            isFalling = false;
+        }
+        //Debug.Log(collision.gameObject.);
         isFalling = false;
+        if (collision.gameObject.tag == "Wall")
+        {
+            //timeToucheWall = Time.time;
+            wallJumping = true;
+            stayWall = rb.position;
+        }
 
         if (collision.gameObject.tag == "Floor")
         {
             isFalling = false;
+            directionNull();
             wallJumping = true;
             lastDirectionForward = Vector3.zero;
             lastDirectionRight = Vector3.zero;
             velocityForward = Vector3.zero;
             velocityRight = Vector3.zero;
         }
-        else if (collision.gameObject.tag == "Wall")
+
+        if (collision.gameObject.tag == "Checkpoint")
         {
-            Debug.Log("Wall");
-            timeToucheWall = Time.time;
-            wallJumping = true;
+            collision.gameObject.GetComponent<CheckPoint>().isWaitingColision = false;
         }
+
+
     }
+
 
     private void OnCollisionStay(Collision collision)
     {
         ContactPoint[] contactPoints = collision.contacts;
-        
-        isFalling = false;
+
+        //isFalling = false;
+
+        Debug.Log(collision.gameObject.name);
+
+        if (collision.gameObject.tag == "Untagged")
+        {
+            isFalling = false;
+        }
 
         if (collision.gameObject.tag == "Wall")
         {
             isWalling = true;
+
+            if (!isFalling)
+            {
+                //Debug.Log("oui");
+                transform.position = stayWall;
+            }
+            else
+            {
+                //Debug.Log("non");
+            }
+
             //Debug.Log(wallJumping);
-            if (Input.GetKey(KeyCode.Space) && wallJumping)
+            if (Input.GetKey(KeyCode.Space))
             {
 
                 wallJumping = false;
 
                 lastSpeed = 100f;
+                rb.AddForce((rb.transform.forward + Camera.transform.forward) * 2, ForceMode.Impulse);
+                //Debug.Log(rb.transform.forward + Camera.transform.forward);
+                lastDirectionForward = rb.transform.forward;
 
-                Vector3 reflectDirection = Vector3.Reflect(lastDirectionForward, contactPoints[0].normal);
+                /*Vector3 reflectDirection = Vector3.Reflect(lastDirectionForward, contactPoints[0].normal);
                 rb.AddForce(reflectDirection * lastSpeed, ForceMode.VelocityChange);
-                lastDirectionForward = reflectDirection;
+                lastDirectionForward = reflectDirection;*/
 
                 //lastDirectionRight = reflectDirection;
                 //lastDirectionRight = contactPoints[0].normal;
-
+                //Debug.Log(isFalling);
                 isFalling = true;
+                jumpInVoid = true;
 
             }
             else
@@ -252,10 +330,18 @@ public class Character : MonoBehaviour
             }
 
         }
+        else if (collision.gameObject.tag == "Floor")
+        {
+            if (!jumpInVoid)
+            {
+                isFalling = false;
+            }
+
+        }
     }
     public void OnTriggerEnter(Collider other)
     {
-       // Debug.Log("trigger !");
+        // Debug.Log("trigger !");
 
         if (other.gameObject.tag == "Checkpoint")
         {
@@ -294,5 +380,5 @@ public class Character : MonoBehaviour
         fadePanel.GetComponent<Image>().color = new Vector4(255, 255, 255, 0);
     }
 
-    
+
 }
