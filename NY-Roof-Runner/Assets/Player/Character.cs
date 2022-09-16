@@ -89,13 +89,9 @@ public class Character : MonoBehaviour
 
         if (jumpInVoid)
         {
-            if ((Time.time - timeTouche) < 0.5)
+            if ((Time.time - timeTouche) > 1 )
             {
                 jumpInVoid = false;
-                timeTouche = Time.time;
-            }
-            else
-            {
                 timeTouche = Time.time;
             }
         }
@@ -116,7 +112,7 @@ public class Character : MonoBehaviour
         {
             ResetPosition();
         }
-
+        Debug.Log("jumpvoid : " + jumpInVoid);
     }
 
     //Vérifie les entrées du clavier puis fait avancer le personnage en fonction.
@@ -319,6 +315,7 @@ public class Character : MonoBehaviour
                 //Debug.Log(isFalling);
                 isFalling = true;
                 jumpInVoid = true;
+                timeTouche = Time.time;
 
             }
             else
